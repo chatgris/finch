@@ -1,0 +1,21 @@
+doctype
+html
+  head
+    meta charset="utf-8"
+    title Pings
+    link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css" rel="stylesheet"
+  body
+    .container
+      header class="jumbotron subhead" id="overview"
+        .container
+          h1 Finch
+      table.table.table-bordered
+        tr
+          th Name
+          th State
+          th Last success
+        - pings.each do |ping|
+          tr class="#{class_for_status(ping.state)}"
+            td= ping.name
+            td= ping.state
+            td= ping.last_success
