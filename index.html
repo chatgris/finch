@@ -1,0 +1,110 @@
+<!doctype html>
+<!-- The Time Machine GitHub pages theme was designed and developed by Jon Rohan, on Feb 7, 2012. -->
+<!-- Follow him for fun. http://twitter.com/jonrohan. Tail his code on http://github.com/jonrohan -->
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <link rel="stylesheet" href="stylesheets/stylesheet.css" media="screen"/>
+  <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/script.js"></script>
+
+  <title>Finch</title>
+  <meta name="description" content="finch is a barebone monitoring dashboard">
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+</head>
+
+<body>
+
+  <div class="wrapper">
+    <header>
+      <h1 class="title">Finch</h1>
+    </header>
+    <div id="container">
+      <p class="tagline">finch is a barebone monitoring dashboard</p>
+      <div id="main" role="main">
+        <div class="download-bar">
+        <div class="inner">
+          <a href="https://github.com/chatgris/finch/tarball/master" class="download-button tar"><span>Download</span></a>
+          <a href="https://github.com/chatgris/finch/zipball/master" class="download-button zip"><span>Download</span></a>
+          <a href="https://github.com/chatgris/finch" class="code">View Finch on GitHub</a>
+        </div>
+        <span class="blc"></span><span class="trc"></span>
+        </div>
+        <article class="markdown-body">
+          <p><img src="https://raw.github.com/chatgris/finch/master/example/finch.jpg" alt="finch"></p>
+
+<p>I was looking for a dashboard that could be used to monitor HTTP apps, databases
+and messaging services. It wanted it to be easy to use and without any
+dependencies.</p>
+
+<p>The search of such a board was starting to take longer than the time required to
+create one. Basically.</p>
+
+<h2>Installation</h2>
+
+<p>Ruby 1.9.2 (or superior) is required.</p>
+
+<p>Install it with rubygems:</p>
+
+<div class="highlight"><pre>gem install finch
+</pre></div>
+
+<p>With bundler, add it to your <code>Gemfile</code>:</p>
+
+<div class="highlight"><pre><span class="n">gem</span> <span class="s2">"finch"</span>
+</pre></div>
+
+<h2>Usage</h2>
+
+<p>Configure a <code>config.ru</code> file:</p>
+
+<div class="highlight"><pre><span class="nb">require</span> <span class="s2">"finch"</span>
+
+<span class="no">Finch</span><span class="o">.</span><span class="n">declare</span> <span class="k">do</span> <span class="o">|</span><span class="n">declarator</span><span class="o">|</span>
+  <span class="n">declarator</span><span class="o">.</span><span class="n">ping</span> <span class="s2">"Admin"</span><span class="p">,</span> <span class="n">host</span><span class="p">:</span> <span class="s2">"localhost"</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="mi">3000</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="s2">"Apps"</span>
+  <span class="n">declarator</span><span class="o">.</span><span class="n">ping</span> <span class="s2">"Front"</span><span class="p">,</span> <span class="n">host</span><span class="p">:</span> <span class="s2">"localhost"</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="mi">3001</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="s2">"Apps"</span>
+  <span class="n">declarator</span><span class="o">.</span><span class="n">ping</span> <span class="s2">"Public Api"</span><span class="p">,</span> <span class="n">host</span><span class="p">:</span> <span class="s2">"localhost"</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="mi">3200</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="s2">"Api"</span>
+  <span class="n">declarator</span><span class="o">.</span><span class="n">ping</span> <span class="s2">"Private Api"</span><span class="p">,</span> <span class="n">host</span><span class="p">:</span> <span class="s2">"localhost"</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="mi">3300</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="s2">"Api"</span>
+  <span class="n">declarator</span><span class="o">.</span><span class="n">ping</span> <span class="s2">"Redis"</span><span class="p">,</span> <span class="n">host</span><span class="p">:</span> <span class="s2">"localhost"</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="mi">6379</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="s2">"DB"</span>
+  <span class="n">declarator</span><span class="o">.</span><span class="n">ping</span> <span class="s2">"Mongo"</span><span class="p">,</span> <span class="n">host</span><span class="p">:</span> <span class="s2">"localhost"</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="mi">27017</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="s2">"DB"</span>
+  <span class="n">declarator</span><span class="o">.</span><span class="n">ping</span> <span class="s2">"ElasticSearch"</span><span class="p">,</span> <span class="n">host</span><span class="p">:</span> <span class="s2">"localhost"</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="mi">9200</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="s2">"DB"</span>
+  <span class="n">declarator</span><span class="o">.</span><span class="n">ping</span> <span class="s2">"Beanstalkd"</span><span class="p">,</span> <span class="n">host</span><span class="p">:</span> <span class="s2">"localhost"</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="mi">11300</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="s2">"Messaging"</span>
+  <span class="n">declarator</span><span class="o">.</span><span class="n">ping</span> <span class="s2">"Finch"</span><span class="p">,</span> <span class="n">host</span><span class="p">:</span> <span class="s2">"localhost"</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="mi">9292</span>
+<span class="k">end</span>
+
+<span class="n">run</span> <span class="no">Finch</span><span class="o">::</span><span class="no">App</span>
+</pre></div>
+
+<p>And run <code>rackup</code>, and you're done.</p>
+
+<h2>Copyright</h2>
+
+<p>MIT. See LICENSE for further details.</p>
+        </article>
+      </div>
+    </div>
+    <footer>
+      <div class="owner">
+      <p><a href="https://github.com/chatgris" class="avatar"><img src="https://secure.gravatar.com/avatar/a29e7ee13933b922279527b4fdfc9220?s=30&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png" width="48" height="48"/></a> <a href="https://github.com/chatgris">chatgris</a> maintains <a href="https://github.com/chatgris/finch">Finch</a></p>
+
+
+      </div>
+      <div class="creds">
+        <small>This page generated using <a href="https://pages.github.com/">GitHub Pages</a><br/>theme by <a href="http://twitter.com/jonrohan/">Jon Rohan</a></small>
+      </div>
+    </footer>
+  </div>
+  <div class="current-section">
+    <a href="#top">Scroll to top</a>
+    <a href="https://github.com/chatgris/finch/tarball/master" class="tar">tar</a><a href="https://github.com/chatgris/finch/zipball/master" class="zip">zip</a><a href="" class="code">source code</a>
+    <p class="name"></p>
+  </div>
+
+  
+</body>
+</html>
