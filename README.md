@@ -2,6 +2,8 @@
 
 finch is a barebone monitoring dashboard.
 
+![finch](https://raw.github.com/chatgris/finch/master/example/finch.jpg)
+
 ## Installation
 
 Ruby 1.9.2 is required.
