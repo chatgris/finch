@@ -1,5 +1,8 @@
 # finch
 
+[![Gem
+Version](https://fury-badge.herokuapp.com/rb/finch.png)](http://badge.fury.io/rb/finch)
+
 finch is a barebone monitoring dashboard.
 
 ![finch](https://raw.github.com/chatgris/finch/master/example/finch.jpg)
