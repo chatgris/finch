@@ -21,12 +21,13 @@ module Finch
 
   class Pinger
     include Celluloid
-    attr_reader   :timer, :host, :port
+    attr_reader   :timer, :host, :port, :group
     attr_accessor :last_success, :state, :name
 
     def initialize(opts = {})
       @name = opts.fetch(:name, "Unkown")
       @host = opts.fetch(:host, "localhost")
+      @group = opts.fetch(:group, "Default")
       @port = opts[:port]
       @timer  = every(opts.fetch(:frequency, 30)) { ping }
       ping

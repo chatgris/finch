@@ -2,8 +2,9 @@ doctype
 html
   head
     meta charset="utf-8"
-    title Pings
+    title Finch
     link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css" rel="stylesheet"
+    meta http-equiv="refresh" content="30"
   body
     .container
       header class="jumbotron subhead" id="overview"
@@ -14,8 +15,12 @@ html
           th Name
           th State
           th Last success
-        - pings.each do |ping|
-          tr class="#{class_for_status(ping.state)}"
-            td= ping.name
-            td= ping.state
-            td= ping.last_success
+        - pings.group_by(&:group).each do |group|
+          tr
+            th colspan=3
+              = group.first
+          - group.last.each do |ping|
+            tr class="#{class_for_status(ping.state)}"
+              td= ping.name
+              td= ping.state
+              td= ping.last_success
