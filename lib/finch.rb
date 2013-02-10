@@ -11,9 +11,10 @@ module Finch
         state == :ok ? "success" : "error"
       end
     end
+
     get "/" do
-      slim :ping, locals: {pings: settings.declarator_ids.map do |id|
-        Celluloid::Actor[id]
+      slim :ping, locals: {pings: settings.pings.map do |ping|
+        Celluloid::Actor[ping]
       end
       }
     end
@@ -24,11 +25,11 @@ module Finch
     attr_reader   :timer, :host, :port, :group
     attr_accessor :last_success, :state, :name
 
-    def initialize(opts = {})
-      @name = opts.fetch(:name, "Unkown")
+    def initialize(name, opts = {})
+      @name = name
       @host = opts.fetch(:host, "localhost")
       @group = opts.fetch(:group, "Default")
-      @port = opts[:port]
+      @port = opts.fetch(:port, lambda { raise(ArgumentError) })
       @timer  = every(opts.fetch(:frequency, 30)) { ping }
       ping
     end
@@ -54,21 +55,21 @@ module Finch
   end
 
   class Declator
-    attr_reader :ids
+    attr_reader :pings
 
     def initialize
-      @ids = []
+      @pings = []
     end
 
-    def ping(opts)
-      ids << id = opts.delete(:id)
-      Pinger.supervise_as(id, opts)
+    def ping(name, opts)
+      pings << name
+      Pinger.supervise_as(name, name, opts)
     end
   end
 
   def declare
     yield declarator = Declator.new
-    App.set :declarator_ids, declarator.ids
+    App.set :pings, declarator.pings
   end
 
   module_function :declare
