@@ -3,7 +3,7 @@ require File.expand_path "../../lib/finch", __FILE__
 
 Finch.declare do |declarator|
   declarator.ping "Admin", host: "localhost", port: 3000, group: "Apps"
-  declarator.ping "Front", host: "localhost", port: 3000, group: "Apps"
+  declarator.ping "Front", host: "localhost", port: 3001, group: "Apps"
   declarator.ping "Public Api", host: "localhost", port: 3200, group: "Api"
   declarator.ping "Private Api", host: "localhost", port: 3300, group: "Api"
   declarator.ping "Redis", host: "localhost", port: 6379, group: "DB"
