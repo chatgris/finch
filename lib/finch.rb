@@ -31,7 +31,7 @@ module Finch
       @group = opts.fetch(:group, "Default")
       @port = opts.fetch(:port, lambda { raise(ArgumentError) })
       @timer  = every(opts.fetch(:frequency, 30)) { ping }
-      ping
+      async.ping
     end
 
     def ping
